@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views
+from .views import PortfolioList
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('api/portfolio/', PortfolioList.as_view(), name='portfolio-list'),
 ]

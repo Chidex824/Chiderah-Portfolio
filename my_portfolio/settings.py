@@ -62,7 +62,10 @@ ROOT_URLCONF = 'my_portfolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'main', 'templates'),
+            os.path.join(BASE_DIR, 'frontend', 'build'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +77,22 @@ TEMPLATES = [
         },
     },
 ]
+
+# Static files configuration
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Add frontend build directory to static files dirs
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'my_portfolio', 'static'),
+    os.path.join(BASE_DIR, 'frontend', 'build', 'static'),
+]
+
+# Whitenoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# React app directory
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend', 'build')
 
 WSGI_APPLICATION = 'my_portfolio.wsgi.application'
 
@@ -124,11 +143,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+from .static_settings import *  # Import static file settings
